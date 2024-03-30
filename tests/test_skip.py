@@ -6,19 +6,6 @@ import pytest
 from selene import browser, query
 
 
-@pytest.fixture(params=[('1920', '1080'), ('1024', '768'), ('800', '600')], scope="function")
-def browser_config(request):
-    width, height = request.param
-    browser.config.window_width = width
-    browser.config.window_height = height
-    if int(width) > 800:
-        yield "desktop"
-    else:
-        yield "mobile"
-
-    browser.quit()
-
-
 def test_mobile_skip(browser_config):
     if browser_config == "mobile":
         pytest.skip("Это мобильное разрешение")
